@@ -1,46 +1,38 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const navLinks = document.querySelectorAll(".navbar a");
+  // const navLinks = document.querySelectorAll(".navbar a");
   const sections = document.querySelectorAll("section");
-  const heroSection = document.querySelector(".hero");
-  const dashboardSection = document.getElementById("dashboard");
-  const pcBuildToolSection = document.getElementById("pc-build-tool");
-  const laptopToolSection = document.getElementById("laptop-tool");
-  const savedRecommendationsSection = document.getElementById(
-    "saved-recommendations",
-  );
+  // const heroSection = document.querySelector(".hero");
+  // const dashboardSection = document.getElementById("dashboard");
+  // const pcBuildToolSection = document.getElementById("pc-build-tool");
+  // const laptopToolSection = document.getElementById("laptop-tool");
+  // const savedRecommendationsSection = document.getElementById(
+  //   "saved-recommendations"
+  // );
   const beginBtn = document.querySelector(".begin-btn");
   const sidebarLinks = document.querySelectorAll(".nav-item");
   const pcBuildStartBtn = document.querySelector(
-    '.card-start-btn[data-type="pc-build"]',
+    '.card-start-btn[data-type="pc-build"]'
   );
   const laptopStartBtn = document.querySelector(
-    '.card-start-btn[data-type="laptop"]',
+    '.card-start-btn[data-type="laptop"]'
   );
   const recommendBuildBtn = document.querySelector(".recommend-build-btn");
   const recommendLaptopBtn = document.querySelector(".recommend-laptop-btn");
   const newRequestBtn = document.querySelectorAll(".new-request-btn");
   const saveRecommendationBtn = document.querySelectorAll(
-    ".save-recommendation-btn",
+    ".save-recommendation-btn"
   );
   const budgetRangeSelect = document.getElementById("budget-range");
   const laptopBudgetRangeSelect = document.getElementById(
-    "laptop-budget-range",
+    "laptop-budget-range"
   );
   const useCaseSelect = document.getElementById("use-case");
   const laptopUseCaseSelect = document.getElementById("laptop-use-case");
 
   const savedLaptopSection = document.getElementById(
-    "saved-laptop-recommendations",
+    "saved-laptop-recommendations"
   );
   const savedPcSection = document.getElementById("saved-pc-recommendations");
-
-  if (dashboardSection) dashboardSection.style.display = "none";
-  if (pcBuildToolSection) pcBuildToolSection.style.display = "none";
-  if (laptopToolSection) laptopToolSection.style.display = "none";
-  if (savedRecommendationsSection)
-    savedRecommendationsSection.style.display = "none";
-  if (savedLaptopSection) savedLaptopSection.style.display = "none";
-  if (savedPcSection) savedPcSection.style.display = "none";
 
   let savedRecommendations = {
     laptop: [],
@@ -57,41 +49,13 @@ document.addEventListener("DOMContentLoaded", function () {
   function saveToLocalStorage() {
     localStorage.setItem(
       "smartPcSavedRecommendations",
-      JSON.stringify(savedRecommendations),
+      JSON.stringify(savedRecommendations)
     );
-  }
-
-  function showSavedLaptopRecommendations() {
-    hideAllSections();
-    if (savedLaptopSection) {
-      savedLaptopSection.style.display = "flex";
-      renderSavedLaptopRecommendations();
-    }
-    document.querySelector(".navbar").style.display = "none";
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  function showSavedPcRecommendations() {
-    hideAllSections();
-    if (savedPcSection) {
-      savedPcSection.style.display = "flex";
-      renderSavedPcRecommendations();
-    }
-    document.querySelector(".navbar").style.display = "none";
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  function hideAllSections() {
-    sections.forEach((section) => {
-      section.style.display = "none";
-    });
-    if (savedLaptopSection) savedLaptopSection.style.display = "none";
-    if (savedPcSection) savedPcSection.style.display = "none";
   }
 
   function renderSavedLaptopRecommendations() {
     const grid = document.querySelector(
-      "#saved-laptop-recommendations .saved-recommendations-grid",
+      "#saved-laptop-recommendations .saved-recommendations-grid"
     );
     if (!grid) return;
 
@@ -139,14 +103,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="cost-amount">${rec.cost}</div>
                 </div>
             </div>
-        `,
+        `
       )
       .join("");
   }
 
   function renderSavedPcRecommendations() {
     const grid = document.querySelector(
-      "#saved-pc-recommendations .saved-recommendations-grid",
+      "#saved-pc-recommendations .saved-recommendations-grid"
     );
     if (!grid) return;
 
@@ -191,7 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="cost-amount">${rec.cost}</div>
                 </div>
             </div>
-        `,
+        `
       )
       .join("");
   }
@@ -203,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
       savedRecommendations.laptop.splice(index, 1);
       saveToLocalStorage();
       renderSavedLaptopRecommendations();
-      updateSavedCount(-1);
+      updateSavedCount();
     }
   };
 
@@ -214,7 +178,7 @@ document.addEventListener("DOMContentLoaded", function () {
       savedRecommendations.pc.splice(index, 1);
       saveToLocalStorage();
       renderSavedPcRecommendations();
-      updateSavedCount(-1);
+      updateSavedCount();
     }
   };
 
@@ -287,16 +251,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function savePcBuildRecommendation() {
     const cpuLabel = document.querySelector(
-      "#pc-build-tool .component-item:nth-child(1) label",
+      "#pc-build-tool .component-item:nth-child(1) label"
     );
     const gpuLabel = document.querySelector(
-      "#pc-build-tool .component-item:nth-child(2) label",
+      "#pc-build-tool .component-item:nth-child(2) label"
     );
     const ramLabel = document.querySelector(
-      "#pc-build-tool .component-item:nth-child(3) label",
+      "#pc-build-tool .component-item:nth-child(3) label"
     );
     const storageLabel = document.querySelector(
-      "#pc-build-tool .component-item:nth-child(4) label",
+      "#pc-build-tool .component-item:nth-child(4) label"
     );
 
     const useCase = useCaseSelect
@@ -324,116 +288,96 @@ document.addEventListener("DOMContentLoaded", function () {
     saveToLocalStorage();
   }
 
-  function updateActiveNav() {
-    let current = "";
-    const scrollPos = window.scrollY + 100;
+  const showLandingPage = () => {
+    console.log(
+      "--------------------------------show landing page--------------------------------"
+    );
+    document.querySelector(".navbar").classList.remove("hidden");
+    sections.forEach((section) => {
+      console.log("section: ", section.id);
+      if (
+        ["hero", "features", "process", "about", "team", "begin"].includes(
+          section.id
+        ) &&
+        section.classList.contains("hidden")
+      ) {
+        console.log("remove hidden from section: ", section.id);
+        section.classList.remove("hidden");
+      }
+    });
+  };
+
+  const hideLandingPage = () => {
+    console.log(
+      "--------------------------------hide landing page--------------------------------"
+    );
+    sections.forEach((section) => {
+      console.log("section: ", section.id);
+      if (
+        ["hero", "features", "process", "about", "team", "begin"].includes(
+          section.id
+        ) &&
+        !section.classList.contains("hidden")
+      ) {
+        console.log("add hidden to section: ", section.id);
+        section.classList.add("hidden");
+      }
+    });
+  };
+
+  const showMainPage = () => {
+    console.log(
+      "--------------------------------show main page--------------------------------"
+    );
+    updateSavedCount();
 
     sections.forEach((section) => {
       if (
-        section.id === "dashboard" ||
-        section.id === "pc-build-tool" ||
-        section.id === "laptop-tool" ||
-        section.id === "saved-recommendations"
-      )
-        return;
-
-      const sectionTop = section.offsetTop;
-      const sectionHeight = section.clientHeight;
-
-      if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-        current = section.getAttribute("id");
+        [
+          "pc-build-tool",
+          "laptop-tool",
+          "saved-recommendations",
+          "saved-laptop-recommendations",
+          "saved-pc-recommendations",
+        ].includes(section.id) &&
+        !section.classList.contains("hidden")
+      ) {
+        section.classList.add("hidden");
+      }
+      if (["dashboard"].includes(section.id)) {
+        section.classList.remove("hidden");
       }
     });
+  };
 
-    navLinks.forEach((link) => {
-      link.classList.remove("active");
-      const href = link.getAttribute("href");
-
-      if (href === "#" && (current === "" || window.scrollY < 100)) {
-        link.classList.add("active");
-      } else if (href === `#${current}`) {
-        link.classList.add("active");
-      }
-    });
-  }
-
-  function showMainPage() {
+  const hideMainPage = () => {
+    console.log(
+      "--------------------------------hide main page--------------------------------"
+    );
     sections.forEach((section) => {
-      section.style.display = "block";
+      console.log("section: ", section.id);
+      if (
+        [
+          "dashboard",
+          "pc-build-tool",
+          "laptop-tool",
+          "saved-recommendations",
+          "saved-laptop-recommendations",
+          "saved-pc-recommendations",
+        ].includes(section.id) &&
+        !section.classList.contains("hidden")
+      ) {
+        console.log("add hidden to section: ", section.id);
+        section.classList.add("hidden");
+      }
     });
-
-    if (dashboardSection) dashboardSection.style.display = "none";
-    if (pcBuildToolSection) pcBuildToolSection.style.display = "none";
-    if (laptopToolSection) laptopToolSection.style.display = "none";
-    if (savedRecommendationsSection)
-      savedRecommendationsSection.style.display = "none";
-    if (savedLaptopSection) savedLaptopSection.style.display = "none";
-    if (savedPcSection) savedPcSection.style.display = "none";
-
-    document.querySelector(".navbar").style.display = "grid";
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+  };
 
   function showDashboard() {
-    sections.forEach((section) => {
-      if (
-        section.id !== "dashboard" &&
-        section.id !== "pc-build-tool" &&
-        section.id !== "laptop-tool" &&
-        section.id !== "saved-recommendations"
-      ) {
-        section.style.display = "none";
-      }
-    });
+    hideLandingPage();
+    showMainPage();
 
-    if (dashboardSection) dashboardSection.style.display = "flex";
-    if (pcBuildToolSection) pcBuildToolSection.style.display = "none";
-    if (laptopToolSection) laptopToolSection.style.display = "none";
-    if (savedRecommendationsSection)
-      savedRecommendationsSection.style.display = "none";
-    if (savedLaptopSection) savedLaptopSection.style.display = "none";
-    if (savedPcSection) savedPcSection.style.display = "none";
-
-    document.querySelector(".navbar").style.display = "none";
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  function showPcBuildTool() {
-    sections.forEach((section) => {
-      if (section.id !== "pc-build-tool") {
-        section.style.display = "none";
-      }
-    });
-
-    if (pcBuildToolSection) pcBuildToolSection.style.display = "flex";
-    document.querySelector(".navbar").style.display = "none";
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  function showLaptopTool() {
-    sections.forEach((section) => {
-      if (section.id !== "laptop-tool") {
-        section.style.display = "none";
-      }
-    });
-
-    if (laptopToolSection) laptopToolSection.style.display = "flex";
-    document.querySelector(".navbar").style.display = "none";
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  function showSavedRecommendations() {
-    sections.forEach((section) => {
-      if (section.id !== "saved-recommendations") {
-        section.style.display = "none";
-      }
-    });
-
-    if (savedRecommendationsSection) {
-      savedRecommendationsSection.style.display = "flex";
-    }
-
-    document.querySelector(".navbar").style.display = "none";
+    document.querySelector(".navbar").classList.add("hidden");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -452,7 +396,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  function updateSavedCount(change) {
+  function updateSavedCount() {
     const totalSaved =
       savedRecommendations.laptop.length + savedRecommendations.pc.length;
     const savedCountElements = document.querySelectorAll(".nav-badge");
@@ -461,42 +405,122 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  navLinks.forEach((link) => {
-    link.addEventListener("click", function (e) {
-      e.preventDefault();
-
-      const targetId = this.getAttribute("href");
-
-      if (targetId === "#") {
-        showMainPage();
-
-        const navbarHeight = document.querySelector(".navbar").offsetHeight;
-        const targetPosition = heroSection.offsetTop - navbarHeight;
-
-        window.scrollTo({
-          top: targetPosition,
-          behavior: "smooth",
-        });
-      } else {
-        showMainPage();
-
-        const targetSection = document.getElementById(targetId.substring(1));
-
-        if (targetSection) {
-          navLinks.forEach((item) => item.classList.remove("active"));
-          this.classList.add("active");
-
-          const navbarHeight = document.querySelector(".navbar").offsetHeight;
-          const targetPosition = targetSection.offsetTop - navbarHeight;
-
-          window.scrollTo({
-            top: targetPosition,
-            behavior: "smooth",
-          });
-        }
+  const showSavedRecommendations = () => {
+    console.log(
+      "--------------------------------show saved recommendations--------------------------------"
+    );
+    sections.forEach((section) => {
+      if (
+        [
+          "dashboard",
+          "pc-build-tool",
+          "laptop-tool",
+          "saved-laptop-recommendations",
+          "saved-pc-recommendations",
+        ].includes(section.id) &&
+        !section.classList.contains("hidden")
+      ) {
+        section.classList.add("hidden");
+      }
+      if (["saved-recommendations"].includes(section.id)) {
+        section.classList.remove("hidden");
       }
     });
-  });
+  };
+
+  const showSavedLaptopRecommendations = () => {
+    console.log(
+      "--------------------------------show saved laptop recommendations--------------------------------"
+    );
+    sections.forEach((section) => {
+      if (
+        [
+          "dashboard",
+          "pc-build-tool",
+          "laptop-tool",
+          "saved-recommendations",
+          "saved-pc-recommendations",
+        ].includes(section.id) &&
+        !section.classList.contains("hidden")
+      ) {
+        section.classList.add("hidden");
+      }
+      if (["saved-laptop-recommendations"].includes(section.id)) {
+        section.classList.remove("hidden");
+      }
+    });
+    renderSavedLaptopRecommendations();
+  };
+
+  const showSavedPcRecommendations = () => {
+    console.log(
+      "--------------------------------show saved pc recommendations--------------------------------"
+    );
+    sections.forEach((section) => {
+      if (
+        [
+          "dashboard",
+          "pc-build-tool",
+          "laptop-tool",
+          "saved-recommendations",
+          "saved-laptop-recommendations",
+        ].includes(section.id) &&
+        !section.classList.contains("hidden")
+      ) {
+        section.classList.add("hidden");
+      }
+      if (["saved-pc-recommendations"].includes(section.id)) {
+        section.classList.remove("hidden");
+      }
+    });
+    renderSavedPcRecommendations();
+  };
+
+  const showPcBuildTool = () => {
+    console.log(
+      "--------------------------------show pc build tool--------------------------------"
+    );
+    sections.forEach((section) => {
+      if (
+        [
+          "dashboard",
+          "laptop-tool",
+          "saved-recommendations",
+          "saved-pc-recommendations",
+          "saved-laptop-recommendations",
+        ].includes(section.id) &&
+        !section.classList.contains("hidden")
+      ) {
+        section.classList.add("hidden");
+      }
+      if (["pc-build-tool"].includes(section.id)) {
+        section.classList.remove("hidden");
+      }
+    });
+  };
+
+  const showLaptopTool = () => {
+    console.log(
+      "--------------------------------show laptop tool--------------------------------"
+    );
+    sections.forEach((section) => {
+      if (
+        [
+          "dashboard",
+          "pc-build-tool",
+          "saved-recommendations",
+          "saved-pc-recommendations",
+          "saved-laptop-recommendations",
+        ].includes(section.id) &&
+        !section.classList.contains("hidden")
+      ) {
+        section.classList.add("hidden");
+      }
+      if (["laptop-tool"].includes(section.id)) {
+        section.classList.remove("hidden");
+      }
+    });
+  };
 
   sidebarLinks.forEach((link) => {
     link.addEventListener("click", function (e) {
@@ -505,15 +529,21 @@ document.addEventListener("DOMContentLoaded", function () {
       const targetId = this.getAttribute("href");
 
       if (targetId === "#") {
-        showMainPage();
+        showLandingPage();
+        hideMainPage();
       } else if (targetId === "#dashboard") {
-        showDashboard();
+        showMainPage();
+        hideLandingPage();
       } else if (targetId === "#saved") {
         showSavedRecommendations();
+        hideLandingPage();
+      } else if (targetId === "#saved-laptop-recommendations") {
+        showSavedLaptopRecommendations();
+        hideLandingPage();
+      } else if (targetId === "#saved-pc-recommendations") {
+        showSavedPcRecommendations();
+        hideLandingPage();
       }
-
-      sidebarLinks.forEach((item) => item.classList.remove("active"));
-      this.classList.add("active");
     });
   });
 
@@ -563,7 +593,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (laptopBudgetRangeSelect) laptopBudgetRangeSelect.value = "75000";
 
       const checkboxes = document.querySelectorAll(
-        '#pc-build-tool input[type="checkbox"]',
+        '#pc-build-tool input[type="checkbox"]'
       );
       checkboxes.forEach((checkbox) => {
         checkbox.checked = true;
@@ -583,7 +613,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       showDashboard();
-      updateSavedCount(1);
+      updateSavedCount();
       alert("Recommendation saved successfully!");
     });
   });
@@ -679,16 +709,16 @@ document.addEventListener("DOMContentLoaded", function () {
           };
 
     document.querySelector(
-      "#pc-build-tool .component-item:nth-child(1) label",
+      "#pc-build-tool .component-item:nth-child(1) label"
     ).textContent = `CPU: ${selectedRecommendation.cpu}`;
     document.querySelector(
-      "#pc-build-tool .component-item:nth-child(2) label",
+      "#pc-build-tool .component-item:nth-child(2) label"
     ).textContent = `GPU: ${selectedRecommendation.gpu}`;
     document.querySelector(
-      "#pc-build-tool .component-item:nth-child(3) label",
+      "#pc-build-tool .component-item:nth-child(3) label"
     ).textContent = `RAM: ${selectedRecommendation.ram}`;
     document.querySelector(
-      "#pc-build-tool .component-item:nth-child(4) label",
+      "#pc-build-tool .component-item:nth-child(4) label"
     ).textContent = `STORAGE: ${selectedRecommendation.storage}`;
   }
 
@@ -802,8 +832,4 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-
-  window.addEventListener("scroll", updateActiveNav);
-  updateActiveNav();
 });
-
